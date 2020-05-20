@@ -47,5 +47,5 @@ package-lock.json     --> Npm specific metadata, including versions of installed
 
 ## Contact
 
-For more information on AngularJS please check out [angularjs.org][angularjs].
+For more information on AngularJS please check out [angularjs](angularjs.org).
 

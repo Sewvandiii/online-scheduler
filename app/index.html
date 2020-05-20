@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html ng-app="mwl.calendar.docs">
+<!-- Added the Online Organizer title -->
+<title>Online Organizer</title>
+<head>
+  <br>
+    <div style="color: green"> 
+        <h1 align ="center" 
+        style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+        > 
+        Online Organizer <i class="fa fa-calendar" aria-hidden="true"></i></h1>
+    </div>
+  <br>
+</head>
+
+  <body ng="app">
+    <div ng-controller="onlineOrganizer as afs">
+      <h3 class="text-center" style="color: green">{{ afs.onlineOrganizerManager}}</h3>
+      <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="btn-group">
+
+            <button class="uk-button btn-warning" 
+              decrement="afs.monthlyview" 
+              style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+              mwl-date-modifier date="afs.modifydate">
+              <!-- Decrease the month of the calender -->
+
+              <
+
+            </button>
+
+            <button class="uk-button btn-success"
+              set-to-today
+              style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+              mwl-date-modifier date="afs.modifydate" set-to-today>
+              <!-- Display the current month of the calender -->
+
+              Current
+
+            </button>
+            
+            <button class="uk-button btn-warning" 
+              increment="afs.monthlyview"
+              style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+              mwl-date-modifier date="afs.modifydate">
+              <!-- Increase the month of the calender -->
+
+              >
+
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <br>
+
+      <!-- import the calender -->
+      <mwl-calendar
+              events="afs.events"
+              view="afs.monthlyview"
+              view-title="afs.onlineOrganizerManager"
+              view-date="afs.modifydate"
+              day-view-start="06:00"
+              day-view-end="22:59"
+              day-view-split="30"
+              cell-is-open="afs.onlineschedularopen"
+              cell-modifier="afs.modifyCell(calendarCell)"
+              on-timespan-click="afs.timespanClicked(calendarDate, calendarCell)">
+      </mwl-calendar>
+
+      <br><br>
+    
+      <hr>
+      
+      <h3 id="event-editor">  
+          <div class="row" align ="center"
+          style="color:green"
+          >
+            <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Edit events</h2>
+            </div>
+        <br><br>
+
+        <button
+                ng-click="afs.addEvent()"
+                style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+                class="uk-button btn-success pull-bottom"
+                >
+
+          <!--Add events to the calendar-->
+
+          Add Event
+          
+        </button>
+
+      </h3>
+      <br>
+
+      <table class="table table-bordered" 
+      style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+
+        <thead>
+        <tr>
+          <th style="color:green">Event Name</th>
+          <th style="color:green">Event Starts</th>
+          <th style="color:green">Event Stops</th>
+          <th style="color:green">Remove Event</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="event in afs.events track by $index">
+          <td>
+            <input
+                    ng-model="event.title"
+                    type="text"
+                    style="color:green"
+                    class="form-control"
+                   >
+          </td>
+
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input
+                      type="text" class="form-control" uib-datepicker-popup="" readonly
+                      ng-model="event.startsAt" is-open="event.startOpen" close-text="Close" >
+
+              <span class="input-group-btn">
+                
+                <button type="button" class="btn btn-success" ng-click="afs.toggle($event, 'startOpen', event)">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                <!--calendar icon-->
+    
+                </button>
+              </span>
+            </p>
+    
+
+            <div
+                uib-timepicker ng-model="event.startsAt" hour-step="1"
+                minute-step="1" show-meridian="true">
+          </div>
+            <!--Can increase and decrease the time by one hour to hour-->
+            <!--Can increase and decrease the time by one minute to minute-->
+          </td>
+
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input
+                      type="text" class="form-control" uib-datepicker-popup="" readonly
+                      is-open="event.endOpen" ng-model="event.endsAt" close-text="Close">
+    
+              <span class="input-group-btn">
+    
+                <button type="button" class="btn btn-success" ng-click="afs.toggle($event, 'endOpen', event)">
+    
+                <!--calendar icon-->
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+    
+                </button>
+              </span>
+            </p>
+
+            <div
+                uib-timepicker hour-step="1" minute-step="1"
+                ng-model="event.endsAt" show-meridian="true">
+            </div>
+            <!--Can increase and decrease the time by one hour to hour-->
+            <!--Can increase and decrease the time by one minute to minute-->
+          </td>
+          <td>
+            <button style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+                    class="uk-button btn-warning"
+                    ng-click="afs.events.splice($index, 1)"
+              >
+              
+              Delete Event
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+    </div>
+
+    <!-- <div class = "row">
+      <div class="timeOut">
+        <div class="timeOutHead">
+          <h3 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Timout Expired Events</h3>
+          <div>
+            <p  style="color:green"><span class="expireData">{{ex.expireQd}} | {{ex.exdate | date}}</span>
+              <span><button type="button" class="uk-button btn-success" ng-click="deleteExpireEvent($index)" >Delete Events</button></span></p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+        <script src="https://unpkg.com/moment@2.17.1"></script>
+        <script src="https://unpkg.com/interactjs@1"></script>
+        <script src="https://unpkg.com/angular@1.6.6/angular.js"></script>
+        <script src="https://unpkg.com/angular-animate@1.6.6/angular-animate.js"></script>
+        <script src="https://unpkg.com/angular-ui-bootstrap@2/dist/ui-bootstrap-tpls.js"></script>
+        <script src="https://unpkg.com/rrule@2"></script>
+        <script src="https://unpkg.com/angular-bootstrap-colorpicker@3"></script>
+        <script src="https://unpkg.com/angular-bootstrap-calendar"></script>
+        <link href="https://unpkg.com/bootstrap@3/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="https://unpkg.com/angular-bootstrap-colorpicker@3/css/colorpicker.min.css" rel="stylesheet">
+        <link href="https://unpkg.com/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="Components/it18040654_1.js"></script>
+        <script src="Components/it18040654_2.js"></script>
+
+    </body>
+
+</html>
+

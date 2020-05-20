@@ -13,7 +13,7 @@ npm install
 npm start
 ```
 
-## Directory Layout
+### Directory Layout
 
 ```
 app/                  --> all of the source files for the application
@@ -45,7 +45,7 @@ package.json          --> Node.js specific metadata, including development tools
 package-lock.json     --> Npm specific metadata, including versions of installed development tools dependencies
 ```
 
-## Contact
+### Contact
 
 For more information on AngularJS please check out [angularjs](angularjs.org).
 

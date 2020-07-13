@@ -1,5 +1,7 @@
 # Online Schedular with AngularJS
 
+This is a web application developed with AngularJS for handling, scheduling upcoming Events of yours. This Online Organizer application has features such as Adding Events to the Events Calendar, deleting Events, Updating Events. 
+
 ## Setup
 
 Download and extract the zip file<br/>
